@@ -105,9 +105,12 @@
 </ul>
 </li>
 <li>Stack Object Tracking：<ul>
-<li>可以完成对栈变量越界访问的细粒度检测，使用在调试符号中出现的变量信息（大小和位置），观察在执行过程中的内存读写<br>TABLE IV: Deployed live analysis techniques and their requirements.<br><img src="/images/what_you_corrupt_03.jpg"><br>注：</li>
+<li>可以完成对栈变量越界访问的细粒度检测，使用在调试符号中出现的变量信息（大小和位置），观察在执行过程中的内存读写</li>
 </ul>
 </li>
+</ul>
+<p>TABLE IV: Deployed live analysis techniques and their requirements.<br><img src="/images/what_you_corrupt_03.jpg"><br>注：</p>
+<ul>
 <li>活性（liveness）检查：在每次模糊测试输入之后，模糊测试器都会收到设备的响应，并评估它是否与预期的行为匹配。当接收到的响应与预期的不同，或者连接超时时，模糊器会报告崩溃并重启目标</li>
 </ul>
 <h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>使用PANDA替换Avatar的后端仿真器S2E，使用PANDA来模拟固件，并依赖它的插件系统（实现启发式算法）来获得部分或完全模拟固件执行时的实时反馈，并借助Avatar在设备初始化后保存并重放设备状态（在初始化完成后保存设备状态的快照，并重用它来初始化模拟器）。</p>
