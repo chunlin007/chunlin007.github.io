@@ -33,8 +33,75 @@
 </ul>
 </li>
 </ul>
-<p><img src="/images/what_you_corrupt_01.png" alt="Table II-"></p>
-<h3 id="Experiment-Survey"><a href="#Experiment-Survey" class="headerlink" title="Experiment Survey"></a>Experiment Survey</h3><h3 id="Six-different-options-to-mitigation"><a href="#Six-different-options-to-mitigation" class="headerlink" title="Six different options to mitigation"></a>Six different options to mitigation</h3><h3 id="Fault-Detection-Heuristics"><a href="#Fault-Detection-Heuristics" class="headerlink" title="Fault Detection Heuristics"></a>Fault Detection Heuristics</h3><h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><h2 id="Evalution"><a href="#Evalution" class="headerlink" title="Evalution"></a>Evalution</h2><h3 id="Fault-Detection"><a href="#Fault-Detection" class="headerlink" title="Fault Detection"></a>Fault Detection</h3><h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><h2 id="Conclusion-or-Limitations"><a href="#Conclusion-or-Limitations" class="headerlink" title="Conclusion or Limitations"></a>Conclusion or Limitations</h2><p>本文讨论的解决方案没有在现实场景下进行测试，可能不适用于所有的场景和所有的嵌入式系统设备。</p>
+<p><img src="/Papers/images/what_you_corrupt_01.png" alt="Table II"></p>
+<h3 id="Experiment-Survey"><a href="#Experiment-Survey" class="headerlink" title="Experiment Survey"></a>Experiment Survey</h3><h3 id="Six-different-options-to-mitigation"><a href="#Six-different-options-to-mitigation" class="headerlink" title="Six different options to mitigation"></a>Six different options to mitigation</h3><ul>
+<li>Static Instrumentation<ul>
+<li>需要源码，编译工具连</li>
+<li>传统的插桩工具难以应用的嵌入式中</li>
+</ul>
+</li>
+<li>Binary Rewriting<ul>
+<li>需要固件镜像，设备</li>
+<li>固件反汇编复杂，内存语句，内存边界以及相应的数据结构会在编译中丢失</li>
+<li>嵌入式设备内存空间小，留下很少的空间用于插桩</li>
+</ul>
+</li>
+<li>Physical Re-Hosting<ul>
+<li>需要源码，编译工具链，不同设备</li>
+<li>将源码重新编译成其他类型的设备固件，例如Type-II编译成Type-I</li>
+<li>编译器不同，可能导致原类型中的漏洞可能不会被在新类型中触发</li>
+</ul>
+</li>
+<li>Full Emulation<ul>
+<li>需要固件镜像，设备仿真器</li>
+<li>要求所需的架构以及设备可以被仿真</li>
+</ul>
+</li>
+<li>Partial Emulation<ul>
+<li>需要固件镜像，设备</li>
+<li>性能以及可扩展性较差</li>
+</ul>
+</li>
+<li>Hardware-Supported Instrumentation<ul>
+<li>需要设备以及一些高级的调试特征</li>
+</ul>
+</li>
+</ul>
+<h3 id="Fault-Detection-Heuristics"><a href="#Fault-Detection-Heuristics" class="headerlink" title="Fault Detection Heuristics"></a>Fault Detection Heuristics</h3><p>本文实现一组启发式方法，来模拟现有的编译时和运行时技术，借助它们检测固件中的内存崩溃。</p>
+<ul>
+<li>Segment Tracking：<ul>
+<li>观察所有内存读写，并验证它们是否发生在有效的位置，从而在某种程度上模仿MMU来检测段错误（非法内存访问），</li>
+<li>需要trace信息和逆向操作</li>
+</ul>
+</li>
+<li>Format Specifier Tracking：<ul>
+<li>验证格式字符串描述在printf()族函数中输入时是否指向一个有效的位置（如果没有动态生成的格式字符串说明符，那么这些有效的位置必须位于只读段中）</li>
+<li>不仅需要了解格式处理函数的位置，还需要了解输入其中一个函数和参数顺序时的寄存器状态。通过逆向工程或固件的自动静态分析，可以获得相应函数的位置及其参数顺序。</li>
+</ul>
+</li>
+<li>Heap Object Tracking：<ul>
+<li>通过计算分配和回收函数的参数和返回值，并记录堆对象的位置和大小来检测与堆相关的时间和空间错误</li>
+<li>依赖于各种信息：已执行的指令、寄存器的状态、内存访问，以及有关分配和释放函数的知识</li>
+</ul>
+</li>
+<li>Call Stack Tracking：<ul>
+<li>通过监听所有直接和间接函数调用和返回指令，来识别基于堆栈的内存损坏（覆盖函数返回地址）</li>
+<li>嵌入式设备通常是中断驱动的，所以可能导致漏报</li>
+</ul>
+</li>
+<li>Call Frame Tracking：<ul>
+<li>调用堆栈跟踪技术的一个更高级的版本，通过跟踪函数调用来定位，然后检查连续内存访问是否交叉堆栈帧，用于检测基于堆栈的粗粒度的缓冲区溢出，不存在漏报</li>
+<li>需要识别执行的指令以及寄存器值，以便在函数项上提取堆栈指针值。然后，必须观察内存访问以检测实际的损坏。</li>
+</ul>
+</li>
+<li>Stack Object Tracking：<ul>
+<li>可以完成对栈变量越界访问的细粒度检测，使用在调试符号中出现的变量信息（大小和位置），观察在执行过程中的内存读写<br>Paper<br>注：活性（liveness）检查：在每次模糊测试输入之后，模糊测试器都会收到设备的响应，并评估它是否与预期的行为匹配。当接收到的响应与预期的不同，或者连接超时时，模糊器会报告崩溃并重启目标</li>
+</ul>
+</li>
+</ul>
+<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>使用PANDA替换Avatar的后端仿真器S2E，使用PANDA来模拟固件，并依赖它的插件系统（实现启发式算法）来获得部分或完全模拟固件执行时的实时反馈，并借助Avatar在设备初始化后保存并重放设备状态（在初始化完成后保存设备状态的快照，并重用它来初始化模拟器）。</p>
+<p>模糊器使用Boofuzz，它不仅生成和发送变异输入，而且还允许定义目标监视和重置钩子，允许模糊用户定义的通信通道，并为串行和TCP连接提供现成的实现。</p>
+<h2 id="Evalution"><a href="#Evalution" class="headerlink" title="Evalution"></a>Evalution</h2><h3 id="Fault-Detection"><a href="#Fault-Detection" class="headerlink" title="Fault Detection"></a>Fault Detection</h3><h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><h2 id="Conclusion-or-Limitations"><a href="#Conclusion-or-Limitations" class="headerlink" title="Conclusion or Limitations"></a>Conclusion or Limitations</h2><p>本文讨论的解决方案没有在现实场景下进行测试，可能不适用于所有的场景和所有的嵌入式系统设备。</p>
 <h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>方法或工具或研究人员  描述<br>Alimi et al 使用遗传算法生成测试输入来模糊部分的MasterCard M&#x2F;Chip规格，并借助部分仿真完成综合测试<br>Kamel et Lanet 为web服务器的HTTP实现设计了一个基于生成的模糊器，能够触发一些BUG，包括智能卡中的错误<br>Koscher et al. 使用逆向工程和包嗅探以及模糊测技术对汽车系统进行了安全测试<br>Almgren et al. 开发了几种基于突变和生成的模糊器，用于测试各种plc和智能仪表<br>Mulliner et al.和Van den Broek et al. 根据GSM规范开发了基于生成的模糊器，用于测试GSM在功能手机和智能手机上的实现<br>PROSPECT 通过转发可能访问物理设备的外设的系统调用来模拟基于Linux的系统，完成固件模糊测试</p>
 <h2 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h2><p>本文对嵌入式系统和桌面系统中出现内存破坏时的行为进行对比，观察到嵌入式系统对内存异常问题的处理通常是静默的，难以直接使用模糊测试工具。因此，作者提出解决这类问题的启发式方法，综合利用Avatar、PANDA、Bootfuzz等工具的优势完成实验设计和评估。</p>
 <h2 id="注：解读如有错误或不当之处，麻烦在评论区批评指正。"><a href="#注：解读如有错误或不当之处，麻烦在评论区批评指正。" class="headerlink" title="注：解读如有错误或不当之处，麻烦在评论区批评指正。"></a>注：解读如有错误或不当之处，麻烦在评论区批评指正。</h2></article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/#Publications"> Publications</a></li><li class="nav_item"><a class="nav-page" href="/"> About</a></li><li class="nav_item"><a class="nav-page" target="_blank" rel="noopener" href="http://littlehappy007.club"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2020 - 2023 by Chunlin</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/js/main.js"></script></body></html>
