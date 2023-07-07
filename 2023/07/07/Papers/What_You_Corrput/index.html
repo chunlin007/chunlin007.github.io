@@ -33,7 +33,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/images/what_you_corrupt_01.png" alt="Table II"></p>
+<p><img src="/images/what_you_corrupt_01.jpg" alt="Table II"></p>
 <h3 id="Experiment-Survey"><a href="#Experiment-Survey" class="headerlink" title="Experiment Survey"></a>Experiment Survey</h3><h3 id="Six-different-options-to-mitigation"><a href="#Six-different-options-to-mitigation" class="headerlink" title="Six different options to mitigation"></a>Six different options to mitigation</h3><ul>
 <li>Static Instrumentation<ul>
 <li>需要源码，编译工具连</li>
@@ -102,6 +102,37 @@
 <h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>使用PANDA替换Avatar的后端仿真器S2E，使用PANDA来模拟固件，并依赖它的插件系统（实现启发式算法）来获得部分或完全模拟固件执行时的实时反馈，并借助Avatar在设备初始化后保存并重放设备状态（在初始化完成后保存设备状态的快照，并重用它来初始化模拟器）。</p>
 <p>模糊器使用Boofuzz，它不仅生成和发送变异输入，而且还允许定义目标监视和重置钩子，允许模糊用户定义的通信通道，并为串行和TCP连接提供现成的实现。</p>
 <h2 id="Evalution"><a href="#Evalution" class="headerlink" title="Evalution"></a>Evalution</h2><h3 id="Fault-Detection"><a href="#Fault-Detection" class="headerlink" title="Fault Detection"></a>Fault Detection</h3><h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><h2 id="Conclusion-or-Limitations"><a href="#Conclusion-or-Limitations" class="headerlink" title="Conclusion or Limitations"></a>Conclusion or Limitations</h2><p>本文讨论的解决方案没有在现实场景下进行测试，可能不适用于所有的场景和所有的嵌入式系统设备。</p>
-<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>方法或工具或研究人员  描述<br>Alimi et al 使用遗传算法生成测试输入来模糊部分的MasterCard M&#x2F;Chip规格，并借助部分仿真完成综合测试<br>Kamel et Lanet 为web服务器的HTTP实现设计了一个基于生成的模糊器，能够触发一些BUG，包括智能卡中的错误<br>Koscher et al. 使用逆向工程和包嗅探以及模糊测技术对汽车系统进行了安全测试<br>Almgren et al. 开发了几种基于突变和生成的模糊器，用于测试各种plc和智能仪表<br>Mulliner et al.和Van den Broek et al. 根据GSM规范开发了基于生成的模糊器，用于测试GSM在功能手机和智能手机上的实现<br>PROSPECT 通过转发可能访问物理设备的外设的系统调用来模拟基于Linux的系统，完成固件模糊测试</p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><table>
+<thead>
+<tr>
+<th align="center">方法或工具或研究人员</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Alimi et al.</td>
+<td align="center">使用遗传算法生成测试输入来模糊部分的MasterCard M&#x2F;Chip规格，并借助部分仿真完成综合测试</td>
+</tr>
+<tr>
+<td align="center">Kamel et Lanet</td>
+<td align="center">为web服务器的HTTP实现设计了一个基于生成的模糊器，能够触发一些BUG，包括智能卡中的错误</td>
+</tr>
+<tr>
+<td align="center">Koscher et al.</td>
+<td align="center">使用逆向工程和包嗅探以及模糊测技术对汽车系统进行了安全测试</td>
+</tr>
+<tr>
+<td align="center">Almgren et al.</td>
+<td align="center">开发了几种基于突变和生成的模糊器，用于测试各种plc和智能仪表</td>
+</tr>
+<tr>
+<td align="center">Mulliner et al.和Van den Broek et al.</td>
+<td align="center">根据GSM规范开发了基于生成的模糊器，用于测试GSM在功能手机和智能手机上的实现</td>
+</tr>
+<tr>
+<td align="center">PROSPECT</td>
+<td align="center">通过转发可能访问物理设备的外设的系统调用来模拟基于Linux的系统，完成固件模糊测试</td>
+</tr>
+</tbody></table>
 <h2 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h2><p>本文对嵌入式系统和桌面系统中出现内存破坏时的行为进行对比，观察到嵌入式系统对内存异常问题的处理通常是静默的，难以直接使用模糊测试工具。因此，作者提出解决这类问题的启发式方法，综合利用Avatar、PANDA、Bootfuzz等工具的优势完成实验设计和评估。</p>
 <h2 id="注：解读如有错误或不当之处，麻烦在评论区批评指正。"><a href="#注：解读如有错误或不当之处，麻烦在评论区批评指正。" class="headerlink" title="注：解读如有错误或不当之处，麻烦在评论区批评指正。"></a>注：解读如有错误或不当之处，麻烦在评论区批评指正。</h2></article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/#Publications"> Publications</a></li><li class="nav_item"><a class="nav-page" href="/"> About</a></li><li class="nav_item"><a class="nav-page" target="_blank" rel="noopener" href="http://littlehappy007.club"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2020 - 2023 by Chunlin</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/js/main.js"></script></body></html>
