@@ -2,7 +2,7 @@
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>  本文证实了嵌入式设备上的内存破坏 (Memory Corruptions) 所产生的行为通常是静默的，大大降低了传统动态测试技术的有效性，尤其是模糊测试。</p>
 <p>为此，作者分析了几类嵌入式设备中内存破坏所带来的影响的差异，同时，展示了它们对固件分析的影响。并且介绍了一些相对简单的启发式方法，它们可以在分析嵌入式设备期间检测以前无法检测的内存破坏问题。</p>
 <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>嵌入式设备上的内存破坏所触发的异常行为不明显，传统动态分析工具难以使用。</p>
-<h2 id="Design"><a href="#Design" class="headerlink" title="Design"></a>Design</h2><h3 id="Classes-of-Embedded-Devices"><a href="#Classes-of-Embedded-Devices" class="headerlink" title="Classes of Embedded Devices"></a>Classes of Embedded Devices</h3><ul>
+<h2 id="Design"><a href="#Design" class="headerlink" title="Design"></a>Design</h2><h4 id="Classes-of-Embedded-Devices"><a href="#Classes-of-Embedded-Devices" class="headerlink" title="Classes of Embedded Devices"></a>Classes of Embedded Devices</h4><ul>
 <li>Type-I: General purpose OS-based devices</li>
 <li>Type-II: Embedded OS-based devices (Custom)<ul>
 <li>uClinux，ZephyrOS or VxWorks</li>
@@ -13,7 +13,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="Main-Challenges-of-Fuzzing-Embedded-Devices"><a href="#Main-Challenges-of-Fuzzing-Embedded-Devices" class="headerlink" title="Main Challenges of Fuzzing Embedded Devices"></a>Main Challenges of Fuzzing Embedded Devices</h3><ul>
+<h4 id="Main-Challenges-of-Fuzzing-Embedded-Devices"><a href="#Main-Challenges-of-Fuzzing-Embedded-Devices" class="headerlink" title="Main Challenges of Fuzzing Embedded Devices"></a>Main Challenges of Fuzzing Embedded Devices</h4><ul>
 <li>Fault Detection：<ul>
 <li>嵌入式设备中缺少触发崩溃和异常的机制，使得动态测试难以根据崩溃和异常信息寻找到BUG，即使提供触发崩溃的机制对于崩溃的检测也异常复杂。通常使用以下两种动态检测（探测）方法：<ul>
 <li>Active probing：将特殊请求插入到与设备或其环境的通信中，会影响被测试软件的状态</li>
@@ -34,7 +34,7 @@
 </li>
 </ul>
 <p>TABLE II: Devices selected for the experiments.<br><img src="/images/what_you_corrupt_01.jpg" alt="TABLE II"></p>
-<h3 id="Experiment-Survey"><a href="#Experiment-Survey" class="headerlink" title="Experiment Survey"></a>Experiment Survey</h3><p>为了研究内存损坏在不同系统中的行为，在不同的系统上触发相同的内存损坏条件，以分析它们会导致可见崩溃，还是导致静默的损坏，结果如下：<br>TABLE III: Observed Behaviour of triggered memory corruptions.<br><img src="/images/what_you_corrupt_02.jpg" alt="TABLE III"><br>注：</p>
+<h4 id="Experiment-Survey"><a href="#Experiment-Survey" class="headerlink" title="Experiment Survey"></a>Experiment Survey</h4><p>为了研究内存损坏在不同系统中的行为，在不同的系统上触发相同的内存损坏条件，以分析它们会导致可见崩溃，还是导致静默的损坏，结果如下：<br>TABLE III: Observed Behaviour of triggered memory corruptions.<br><img src="/images/what_you_corrupt_02.jpg" alt="TABLE III"><br>注：</p>
 <ul>
 <li>mbed TLS-&gt;为嵌入式和桌面系统设计的SSL库</li>
 <li>expat-&gt;流行的XML解析器</li>
