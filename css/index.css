@@ -45,11 +45,11 @@ figure.highlight {
   position: relative;
   margin: 0;
   width: auto;
-  border: none;
+  border: 1px;
 }
 .page .highlight td {
   padding: 0;
-  border: none;
+  border: 1px;
 }
 .page .highlight .gutter pre {
   padding-right: 0.8rem;
