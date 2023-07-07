@@ -1,6 +1,6 @@
 <hr>
 <h2 id="title-What-You-Corrupt-Is-Not-What-You-Crash-Challenges-in-Fuzzing-Embedded-Devices"><a href="#title-What-You-Corrupt-Is-Not-What-You-Crash-Challenges-in-Fuzzing-Embedded-Devices" class="headerlink" title="title: What You Corrupt Is Not What You Crash-Challenges in Fuzzing Embedded Devices"></a>title: What You Corrupt Is Not What You Crash-Challenges in Fuzzing Embedded Devices</h2><h2 id="Basic-Information"><a href="#Basic-Information" class="headerlink" title="Basic Information"></a>Basic Information</h2><p>Vue: NDSS’18<br>Author: Marius Muench, Jan Stijohann, Frank Kargl</p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>&amp;#8195;&amp;#8195;本文证实了嵌入式设备上的内存破坏 (Memory Corruptions) 所产生的行为通常是静默的，大大降低了传统动态测试技术的有效性，尤其是模糊测试。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>  本文证实了嵌入式设备上的内存破坏 (Memory Corruptions) 所产生的行为通常是静默的，大大降低了传统动态测试技术的有效性，尤其是模糊测试。</p>
 <p>为此，作者分析了几类嵌入式设备中内存破坏所带来的影响的差异，同时，展示了它们对固件分析的影响。并且介绍了一些相对简单的启发式方法，它们可以在分析嵌入式设备期间检测以前无法检测的内存破坏问题。</p>
 <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>嵌入式设备上的内存破坏所触发的异常行为不明显，传统动态分析工具难以使用。</p>
 <h2 id="Design"><a href="#Design" class="headerlink" title="Design"></a>Design</h2><h3 id="Classes-of-Embedded-Devices"><a href="#Classes-of-Embedded-Devices" class="headerlink" title="Classes of Embedded Devices"></a>Classes of Embedded Devices</h3><ul>
