@@ -2,26 +2,17 @@
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>为了克服固件动态测试的可扩展性差（依赖硬件、硬件抽象层）问题，本文提出了一种称为P2IM（Processor-Peripheral Interface Modeling）的新技术，它基于访问模式完成了对MCU固件外围设备的自动建模工作。在外设模型的辅助下，仿真器（QEMU）可以为给定的二进制固件提供运行环境，并将模糊器（TriforceAFL）种子以字节为单位提供给固件，从而完成对MCU类固件的分析工作。</p>
 <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>现有的对嵌入式MCU固件进行分析的框架可扩展性差，存在硬件依赖以及硬件抽象层依赖等问题</p>
 <h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><ul>
-<li>Ch1: Hardware depedence<ul>
-<li>由于仿真的不完整性，仿真器不足的部分仍然依赖硬件</li>
-</ul>
-</li>
-<li>Ch2: Wide Range of Peripherals<ul>
-<li>MCU硬件高度异构，外设种类多样</li>
-</ul>
-</li>
-<li>Ch3: Diverse OS&#x2F;System Designs<ul>
-<li>MCU设备使用的操作系统之间存在显著差异。有些MCU甚至只使用一个管理硬件和任务调度的系统库</li>
-</ul>
-</li>
+<li>Ch1: Hardware depedence: 由于仿真的不完整性，仿真器不足的部分仍然依赖硬件</li>
+<li>Ch2: Wide Range of Peripherals: MCU硬件高度异构，外设种类多样</li>
+<li>Ch3: Diverse OS&#x2F;System Designs: MCU设备使用的操作系统之间存在显著差异。有些MCU甚至只使用一个管理硬件和任务调度的系统库</li>
 <li>Ch4: Incompatible Fuzzing Interfaces：<ul>
 <li>固件通过外设读取输入，而外设有许多不同的类型，并有自己的访问约定</li>
 <li>固件中的不同驱动程序可以对相同的外设进行不同的配置，然后通过不同的接口执行I&#x2F;O操作</li>
 </ul>
 </li>
 </ul>
-<h2 id="Design"><a href="#Design" class="headerlink" title="Design"></a>Design</h2><h3 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h3><p>在模糊器和固件之间架起桥梁。它允许现有的模糊器在不了解单片机软硬件设计的情况下进行固件测试</p>
-<h3 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h3><ul>
+<h2 id="Design"><a href="#Design" class="headerlink" title="Design"></a>Design</h2><h4 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h4><p>在模糊器和固件之间架起桥梁。它允许现有的模糊器在不了解单片机软硬件设计的情况下进行固件测试</p>
+<h4 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h4><ul>
 <li>定义抽象模型: P2IM(Processor-Peripheral Interface Modeling)<ul>
 <li>为广泛的MCU架构(如ARM Cortex-M)定义一个抽象模型，当访问处理器外设接口时，抽象模型捕获固件遵循的通用模式和约定以及可接受的输入	</li>
 <li>定义抽象模型是由领域专家手工和离线完成的过程</li>
@@ -41,7 +32,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="Details"><a href="#Details" class="headerlink" title="Details"></a>Details</h3><p><img src="/images/p2im_02.png" alt="FIG2"></p>
+<h4 id="Details"><a href="#Details" class="headerlink" title="Details"></a>Details</h4><p><img src="/images/p2im_02.png" alt="FIG2"></p>
 <h4 id="Register-Category-Access-Patterns-and-Handling"><a href="#Register-Category-Access-Patterns-and-Handling" class="headerlink" title="Register Category, Access Patterns and Handling"></a>Register Category, Access Patterns and Handling</h4><ul>
 <li>Control Registers(CR): 由固件使用，用于控制或配置外设<ul>
 <li>访问模式（依据）：read-modify-write (RMW)</li>
@@ -95,7 +86,7 @@
 </li>
 </ul>
 <h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><h4 id="Whether-it-satisfies-P2IE-when-executing-firmware-fordifferent-MCU-with-different-OSes"><a href="#Whether-it-satisfies-P2IE-when-executing-firmware-fordifferent-MCU-with-different-OSes" class="headerlink" title="Whether it satisfies P2IE when executing firmware fordifferent MCU with different OSes?"></a>Whether it satisfies P2IE when executing firmware fordifferent MCU with different OSes?</h4><p>P2IM允许大多数固件在不支持MCU外围设备的模拟器上执行，没有任何崩溃、stall或操作跳过。<br><img src="/images/p2im_03.png" alt="FIG3"><br><img src="/images/p2im_04.png" alt="FIG4"></p>
-<h4 id="How-its-runtime-performance-is-in-practice"><a href="#How-its-runtime-performance-is-in-practice" class="headerlink" title="How its runtime performance is in practice?"></a>How its runtime performance is in practice?</h4><h4 id="Whether-it-can-perform-fuzz-testing-on-real-firmware-in-a-fully-emulated-fashion-i-e-no-hardware-dependence-and-find-previously-unknown-bugs"><a href="#Whether-it-can-perform-fuzz-testing-on-real-firmware-in-a-fully-emulated-fashion-i-e-no-hardware-dependence-and-find-previously-unknown-bugs" class="headerlink" title="Whether it can perform fuzz-testing on real firmware in a fully emulated fashion (i.e., no hardware dependence) and find previously unknown bugs?"></a>Whether it can perform fuzz-testing on real firmware in a fully emulated fashion (i.e., no hardware dependence) and find previously unknown bugs?</h4><p>与单元测试相比，在真正的固件上取得了类似甚至更好的结果。<br><img src="/images/p2im_05.png" alt="FIG5"><br><img src="/images/p2im_06.png" alt="FIG6"></p>
+<h4 id="How-its-runtime-performance-is-in-practice-Whether-it-can-perform-fuzz-testing-on-real-firmware-in-a-fully-emulated-fashion-i-e-no-hardware-dependence-and-find-previously-unknown-bugs"><a href="#How-its-runtime-performance-is-in-practice-Whether-it-can-perform-fuzz-testing-on-real-firmware-in-a-fully-emulated-fashion-i-e-no-hardware-dependence-and-find-previously-unknown-bugs" class="headerlink" title="How its runtime performance is in practice? Whether it can perform fuzz-testing on real firmware in a fully emulated fashion (i.e., no hardware dependence) and find previously unknown bugs?"></a>How its runtime performance is in practice? Whether it can perform fuzz-testing on real firmware in a fully emulated fashion (i.e., no hardware dependence) and find previously unknown bugs?</h4><p>与单元测试相比，在真正的固件上取得了类似甚至更好的结果。<br><img src="/images/p2im_05.png" alt="FIG5"><br><img src="/images/p2im_06.png" alt="FIG6"></p>
 <h2 id="Conclusion-or-Limitations"><a href="#Conclusion-or-Limitations" class="headerlink" title="Conclusion or Limitations"></a>Conclusion or Limitations</h2><ul>
 <li>Direct Memory Access (DMA)  问题未能解决</li>
 <li>Architectures beyond ARM：架构模型仅局限在了ARM，可以通过分析架构特征将P2IM扩展到其他架构</li>
@@ -134,14 +125,14 @@
 </tr>
 <tr>
 <td align="center">Pri caching方法</td>
-<td align="center"></td>
+<td align="center">使用缓存的外设访问近似的固件状态进行分析</td>
 </tr>
 <tr>
 <td align="center">上述的这些工作，都对硬件有不同程度的依赖，测试速度慢，可扩展性差，并且使用时，需要一定的专业知识。</td>
 <td align="center"></td>
 </tr>
 </tbody></table>
-<h4 id="Dynamic-Firmware-Analysis-1"><a href="#Dynamic-Firmware-Analysis-1" class="headerlink" title="Dynamic Firmware Analysis"></a>Dynamic Firmware Analysis</h4><table>
+<h4 id="Static-Firmware-Analysis"><a href="#Static-Firmware-Analysis" class="headerlink" title="Static Firmware Analysis"></a>Static Firmware Analysis</h4><table>
 <thead>
 <tr>
 <th align="center">方法或工具或研究人员</th>
