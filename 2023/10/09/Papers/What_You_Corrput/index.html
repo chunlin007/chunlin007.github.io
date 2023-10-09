@@ -1,8 +1,8 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>chunlin007</title><meta name="author" content="Chunlin"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/">chunlin007</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/#Publications"> Publications</a></li><li class="menus_item"><a class="site-page" href="/"> About</a></li><li class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="http://littlehappy007.club"> Blog</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>Chunlin</h3><p class="author-bio">Your biography can be writed down here.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-facebook-square" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-stack-overflow" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weibo" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-rss" aria-hidden="true"></i></a></li></ul><ul class="social-links"><li><a class="e-social-link" href="/" target="_blank"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Google Scholar</span></a></li><li><a class="e-social-link" href="/" target="_blank"><i class="fab fa-orcid" aria-hidden="true"></i><span>ORCID</span></a></li></ul></div></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">What You Corrupt Is Not What You Crash-Challenges in Fuzzing Embedded Devices</h2><article><h2 id="Basic-Information"><a href="#Basic-Information" class="headerlink" title="Basic Information"></a>Basic Information</h2><p>Conference: NDSS’18<br>Author: Marius Muench, Jan Stijohann, Frank Kargl</p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本文证实了嵌入式设备上的内存破坏 (Memory Corruptions) 所产生的行为通常是静默的，大大降低了传统动态测试技术的有效性，尤其是模糊测试。</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>chunlin007</title><meta name="author" content="Chunlin"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/">chunlin007</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/#Publications"> Publications</a></li><li class="menus_item"><a class="site-page" href="/"> About</a></li><li class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="http://littlehappy007.club"> Blog</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>Chunlin</h3><p class="author-bio">Your biography can be writed down here.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-facebook-square" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-stack-overflow" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weibo" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-rss" aria-hidden="true"></i></a></li></ul><ul class="social-links"><li><a class="e-social-link" href="/" target="_blank"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Google Scholar</span></a></li><li><a class="e-social-link" href="/" target="_blank"><i class="fab fa-orcid" aria-hidden="true"></i><span>ORCID</span></a></li></ul></div></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">What You Corrupt Is Not What You Crash-Challenges in Fuzzing Embedded Devices</h2><article><h2 id="1-Basic-Information"><a href="#1-Basic-Information" class="headerlink" title="1. Basic Information"></a>1. Basic Information</h2><p>Conference: NDSS’18<br>Author: Marius Muench, Jan Stijohann, Frank Kargl</p>
+<h2 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2. Introduction"></a>2. Introduction</h2><p>本文证实了嵌入式设备上的内存破坏 (Memory Corruptions) 所产生的行为通常是静默的，大大降低了传统动态测试技术的有效性，尤其是模糊测试。</p>
 <p>为此，作者分析了几类嵌入式设备中内存破坏所带来的影响的差异，同时，展示了它们对固件分析的影响。并且介绍了一些相对简单的启发式方法，它们可以在分析嵌入式设备期间检测以前无法检测的内存破坏问题。</p>
-<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>嵌入式设备上的内存破坏所触发的异常行为不明显，传统动态分析工具难以使用。</p>
-<h2 id="Design"><a href="#Design" class="headerlink" title="Design"></a>Design</h2><h4 id="Classes-of-Embedded-Devices"><a href="#Classes-of-Embedded-Devices" class="headerlink" title="Classes of Embedded Devices"></a>Classes of Embedded Devices</h4><ul>
+<h2 id="3-Problem"><a href="#3-Problem" class="headerlink" title="3. Problem"></a>3. Problem</h2><p>嵌入式设备上的内存破坏所触发的异常行为不明显，传统动态分析工具难以使用。</p>
+<h2 id="4-Design"><a href="#4-Design" class="headerlink" title="4. Design"></a>4. Design</h2><h4 id="4-1-Classes-of-Embedded-Devices"><a href="#4-1-Classes-of-Embedded-Devices" class="headerlink" title="4.1 Classes of Embedded Devices"></a>4.1 Classes of Embedded Devices</h4><ul>
 <li>Type-I: General purpose OS-based devices</li>
 <li>Type-II: Embedded OS-based devices (Custom)<ul>
 <li>uClinux，ZephyrOS or VxWorks</li>
@@ -13,7 +13,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="Main-Challenges-of-Fuzzing-Embedded-Devices"><a href="#Main-Challenges-of-Fuzzing-Embedded-Devices" class="headerlink" title="Main Challenges of Fuzzing Embedded Devices"></a>Main Challenges of Fuzzing Embedded Devices</h4><ul>
+<h4 id="4-2-Main-Challenges-of-Fuzzing-Embedded-Devices"><a href="#4-2-Main-Challenges-of-Fuzzing-Embedded-Devices" class="headerlink" title="4.2 Main Challenges of Fuzzing Embedded Devices"></a>4.2 Main Challenges of Fuzzing Embedded Devices</h4><ul>
 <li>Fault Detection：<ul>
 <li>嵌入式设备中缺少触发崩溃和异常的机制，使得动态测试难以根据崩溃和异常信息寻找到BUG，即使提供触发崩溃的机制对于崩溃的检测也异常复杂。通常使用以下两种动态检测（探测）方法：<ul>
 <li>Active probing：将特殊请求插入到与设备或其环境的通信中，会影响被测试软件的状态</li>
@@ -34,7 +34,7 @@
 </li>
 </ul>
 <p><img src="/images/what_you_corrupt_01.jpg" alt="TABLE II"></p>
-<h4 id="Experiment-Survey"><a href="#Experiment-Survey" class="headerlink" title="Experiment Survey"></a>Experiment Survey</h4><p>为了研究内存损坏在不同系统中的行为，在不同的系统上触发相同的内存损坏条件，以分析它们会导致可见崩溃，还是导致静默的损坏，结果如下：<br><img src="/images/what_you_corrupt_02.jpg" alt="TABLE III"><br>注：</p>
+<h4 id="4-3-Experiment-Survey"><a href="#4-3-Experiment-Survey" class="headerlink" title="4.3 Experiment Survey"></a>4.3 Experiment Survey</h4><p>为了研究内存损坏在不同系统中的行为，在不同的系统上触发相同的内存损坏条件，以分析它们会导致可见崩溃，还是导致静默的损坏，结果如下：<br><img src="/images/what_you_corrupt_02.jpg" alt="TABLE III"><br>注：</p>
 <ul>
 <li>mbed TLS-&gt;为嵌入式和桌面系统设计的SSL库</li>
 <li>expat-&gt;流行的XML解析器</li>
@@ -44,7 +44,7 @@
 <li>嵌入式平台提供的功能越少，检测到内存损坏的可能性就越小。对于基于堆的缓冲区溢出和双释放问题，嵌入式Linux（Type I）会继续运行，并在稍后的时间点崩溃</li>
 <li>Type-II和Type-III设备的输入错误很少会触发崩溃，进一步说明在嵌入式系统中，静默内存损坏是及其常见的</li>
 </ul>
-<h4 id="Six-different-options-to-mitigation"><a href="#Six-different-options-to-mitigation" class="headerlink" title="Six different options to mitigation"></a>Six different options to mitigation</h4><ul>
+<h4 id="4-4-Six-different-options-to-mitigation"><a href="#4-4-Six-different-options-to-mitigation" class="headerlink" title="4.4 Six different options to mitigation"></a>4.4 Six different options to mitigation</h4><ul>
 <li>Static Instrumentation<ul>
 <li>需要源码，编译工具连</li>
 <li>传统的插桩工具难以应用的嵌入式中</li>
@@ -77,7 +77,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="Fault-Detection-Heuristics"><a href="#Fault-Detection-Heuristics" class="headerlink" title="Fault Detection Heuristics"></a>Fault Detection Heuristics</h4><p>本文实现一组启发式方法，来模拟现有的编译时和运行时技术，借助它们检测固件中的内存崩溃。</p>
+<h4 id="4-5-Fault-Detection-Heuristics"><a href="#4-5-Fault-Detection-Heuristics" class="headerlink" title="4.5 Fault Detection Heuristics"></a>4.5 Fault Detection Heuristics</h4><p>本文实现一组启发式方法，来模拟现有的编译时和运行时技术，借助它们检测固件中的内存崩溃。</p>
 <ul>
 <li>Segment Tracking：<ul>
 <li>观察所有内存读写，并验证它们是否发生在有效的位置，从而在某种程度上模仿MMU来检测段错误（非法内存访问），</li>
@@ -113,9 +113,9 @@
 <ul>
 <li>活性（liveness）检查：在每次模糊测试输入之后，模糊测试器都会收到设备的响应，并评估它是否与预期的行为匹配。当接收到的响应与预期的不同，或者连接超时时，模糊器会报告崩溃并重启目标</li>
 </ul>
-<h4 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h4><p>使用PANDA替换Avatar的后端仿真器S2E，使用PANDA来模拟固件，并依赖它的插件系统（实现启发式算法）来获得部分或完全模拟固件执行时的实时反馈，并借助Avatar在设备初始化后保存并重放设备状态（在初始化完成后保存设备状态的快照，并重用它来初始化模拟器）。</p>
+<h4 id="4-6-Implementation"><a href="#4-6-Implementation" class="headerlink" title="4.6 Implementation"></a>4.6 Implementation</h4><p>使用PANDA替换Avatar的后端仿真器S2E，使用PANDA来模拟固件，并依赖它的插件系统（实现启发式算法）来获得部分或完全模拟固件执行时的实时反馈，并借助Avatar在设备初始化后保存并重放设备状态（在初始化完成后保存设备状态的快照，并重用它来初始化模拟器）。</p>
 <p>模糊器使用Boofuzz，它不仅生成和发送变异输入，而且还允许定义目标监视和重置钩子，允许模糊用户定义的通信通道，并为串行和TCP连接提供现成的实现。</p>
-<h2 id="Evalution"><a href="#Evalution" class="headerlink" title="Evalution"></a>Evalution</h2><h4 id="Fault-Detection"><a href="#Fault-Detection" class="headerlink" title="Fault Detection"></a>Fault Detection</h4><p><img src="/images/what_you_corrupt_04.jpg" alt="FIG1"><br>注：</p>
+<h2 id="5-Evalution"><a href="#5-Evalution" class="headerlink" title="5. Evalution"></a>5. Evalution</h2><h4 id="5-1-Fault-Detection"><a href="#5-1-Fault-Detection" class="headerlink" title="5.1 Fault Detection"></a>5.1 Fault Detection</h4><p><img src="/images/what_you_corrupt_04.jpg" alt="FIG1"><br>注：</p>
 <ul>
 <li>NAT: Native（在实际设备上执行，不使用任何错误检测）</li>
 <li>PE&#x2F;MF: Partial Emulation with Memory Forwarding，使用PANDA仿真固件+借助I&#x2F;O转发与物理设备交互</li>
@@ -123,13 +123,13 @@
 <li>FE: Full Emulation，固件和设备均使用PANDA</li>
 <li>PC：对模糊器插桩，强制以指定概率触发漏洞<br>由上图可见，组合启发式（每组中最右边的条）总是成功地检测到所有的损坏，而依赖于活动检查（最左边的条）总是留下大量未检测到的错误</li>
 </ul>
-<h4 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h4><p><img src="/images/what_you_corrupt_05.jpg" alt="FIG2"><br>由上图可知，在性能方面，</p>
+<h4 id="5-2-Performance"><a href="#5-2-Performance" class="headerlink" title="5.2 Performance"></a>5.2 Performance</h4><p><img src="/images/what_you_corrupt_05.jpg" alt="FIG2"><br>由上图可知，在性能方面，</p>
 <ul>
 <li>使用内存转发的部分仿真（PE&#x2F;MF）会引入较大的开销。它将模糊测试的速度降低了一个以上的数量级。这种开销是由固件和设备外设之间的通信引入的，这会导致频繁调用Avatar的编排特性</li>
 <li>使用纯软件仿真，具由最接近于原始物理设备的速度</li>
 </ul>
-<h2 id="Conclusion-or-Limitations"><a href="#Conclusion-or-Limitations" class="headerlink" title="Conclusion or Limitations"></a>Conclusion or Limitations</h2><p>本文讨论的解决方案没有在现实场景下进行测试，可能不适用于所有的场景和所有的嵌入式系统设备。</p>
-<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><table>
+<h2 id="6-Conclusion-or-Limitations"><a href="#6-Conclusion-or-Limitations" class="headerlink" title="6. Conclusion or Limitations"></a>6. Conclusion or Limitations</h2><p>本文讨论的解决方案没有在现实场景下进行测试，可能不适用于所有的场景和所有的嵌入式系统设备。</p>
+<h2 id="7-Related-Work"><a href="#7-Related-Work" class="headerlink" title="7. Related Work"></a>7. Related Work</h2><table>
 <thead>
 <tr>
 <th align="center">方法或工具或研究人员</th>
@@ -161,6 +161,6 @@
 <td align="center">通过转发可能访问物理设备的外设的系统调用来模拟基于Linux的系统，完成固件模糊测试</td>
 </tr>
 </tbody></table>
-<h2 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h2><p>本文对嵌入式系统和桌面系统中出现内存破坏时的行为进行对比，观察到嵌入式系统对内存异常问题的处理通常是静默的，难以直接使用模糊测试工具。因此，作者提出解决这类问题的启发式方法，综合利用Avatar、PANDA、Bootfuzz等工具的优势完成实验设计和评估。</p>
+<h2 id="8-Comments"><a href="#8-Comments" class="headerlink" title="8. Comments"></a>8. Comments</h2><p>本文对嵌入式系统和桌面系统中出现内存破坏时的行为进行对比，观察到嵌入式系统对内存异常问题的处理通常是静默的，难以直接使用模糊测试工具。因此，作者提出解决这类问题的启发式方法，综合利用Avatar、PANDA、Bootfuzz等工具的优势完成实验设计和评估。</p>
 <p>注：解读如有错误或不当之处，麻烦在评论区批评指正。</p>
 </article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/#Publications"> Publications</a></li><li class="nav_item"><a class="nav-page" href="/"> About</a></li><li class="nav_item"><a class="nav-page" target="_blank" rel="noopener" href="http://littlehappy007.club"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2020 - 2023 by Chunlin</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/js/main.js"></script></body></html>
