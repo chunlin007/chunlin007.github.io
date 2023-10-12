@@ -19,7 +19,7 @@
 <li>Dependencies Appending: 追加用于初始化、用于记录分支信息、用于网络和输入重定向的函数、库以及其他依赖项</li>
 </ul>
 </li>
-<li>详细流程: 二进制插桩的详细流程如下：将基本块中跳转指令（instr<sub>branch</sub>）的下一条指令修改为存根块（stub<sub>instr</sub>），存根块中记录了分支信息，它引导程序跳转到用于进行覆盖率信息收集的基本块（blocktracing），之后再经过封装指令块（blockwrapped_instr）返回原始程序的控制流中，所谓的封装块是指封装了边界指令（分支指令、分支指令之后的指令的目的地址以及函数的入口）的基本块。blocktracing和blockwrapped_instr存储在.pcode和.pdata中，这两个节追加在待测试ELF文件节头部表的之后。通过这种方式避免影待测程序的控制流。</li>
+<li>详细流程: 二进制插桩的详细流程如下：将基本块中跳转指令（instr<sub>branch</sub>）的下一条指令修改为存根块（stub<sub>instr</sub>），存根块中记录了分支信息，它引导程序跳转到用于进行覆盖率信息收集的基本块（block<sub>tracing</sub>），之后再经过封装指令块（block<sub>wrapped_instr</sub>）返回原始程序的控制流中，所谓的封装块是指封装了边界指令（分支指令、分支指令之后的指令的目的地址以及函数的入口）的基本块。block<sub>tracing</sub>和block<sub>wrapped_instr</sub>存储在.pcode和.pdata中，这两个节追加在待测试ELF文件节头部表的之后。通过这种方式避免影待测程序的控制流。</li>
 <li>指令封装的实现细节:<br><img src="/images/afliot_03.png" alt="FIG3"><br>注: typeir: PC irrelevant instruction<br>  typernp: PC read-only instruction without push operation<br>  typerp: PC read-only instruction with push operation<br>  typew: PC write instruction<br>  pivot: 非边界指令</li>
 </ul>
 <h4 id="4-3-Fuzzing-Phase"><a href="#4-3-Fuzzing-Phase" class="headerlink" title="4.3 Fuzzing Phase"></a>4.3 Fuzzing Phase</h4><ul>
