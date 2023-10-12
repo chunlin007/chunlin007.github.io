@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>chunlin007</title><meta name="author" content="Chunlin"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/">chunlin007</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/"> MainPage</a></li><li class="menus_item"><a class="site-page" href="/#Publications"> Publications</a></li><li class="menus_item"><a class="site-page" href="/"> About</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>Chunlin</h3><p class="author-bio">Do your best.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-facebook-square" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-stack-overflow" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weibo" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-rss" aria-hidden="true"></i></a></li></ul><ul class="social-links"><li><a class="e-social-link" href="/" target="_blank"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Google Scholar</span></a></li><li><a class="e-social-link" href="/" target="_blank"><i class="fab fa-orcid" aria-hidden="true"></i><span>ORCID</span></a></li></ul></div></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">AFLIoT_Fuzzing on linux-based IoT device with binary-level instrumentation</h2><article><h2 id="1-Basic-Information"><a href="#1-Basic-Information" class="headerlink" title="1. Basic Information"></a>1. Basic Information</h2><p>Conference: Computer &amp; Security’22<br>Author: Xuechao Du, Andong Chen, Boyuan He, Hao Chen</p>
+<h2 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2. Introduction"></a>2. Introduction</h2><p>本文设计了AFLIoT，它使用无偏移的二进制插装技术重写基于Linux的物联网固件二进制，并直接在设备上对固件进行分析。</p>
+<h2 id="3-Challenges"><a href="#3-Challenges" class="headerlink" title="3. Challenges"></a>3. Challenges</h2><ul>
+<li>Ch1: IoT固件高度多样化和而在分析中有限的硬件和软件</li>
+<li>Ch2: 许多IoT设备由开发商自己开发，现有仿真器无法支持对该类设备的仿真</li>
+<li>Ch3: IoT设备中的联网程序以守护进行的形式运行，只能通过远程接受一次指令，一旦模糊测试提供了不合适输入，之后都将无法进行分析</li>
+</ul>
+<h2 id="4-Design"><a href="#4-Design" class="headerlink" title="4. Design"></a>4. Design</h2><h4 id="4-1-Overview"><a href="#4-1-Overview" class="headerlink" title="4.1 Overview"></a>4.1 Overview</h4><p><img src="/images/afliot_01.png" alt="FIG1"><br>如上图所示，AFLIoT的工作主要分为静态二进制插桩阶段和模糊测试阶段。</p>
+<h4 id="4-2-Binary-Static-Instrumentation"><a href="#4-2-Binary-Static-Instrumentation" class="headerlink" title="4.2 Binary Static Instrumentation"></a>4.2 Binary Static Instrumentation</h4><p><img src="/images/afliot_02.png" alt="FIG2"></p>
+<ul>
+<li>大致流程<ul>
+<li>File Reconstruction: 插桩会引入新的指令，所以需要调整目标程序的文件结构，预分配新的额外的空间来存储这些指令</li>
+<li>Basic Block Identification: 目标二进制的中基本块入口地址被识别为插桩点<ul>
+<li>PC无关的指令通常是一个基本块的出口，它的下一条指令和目的指令将是其他基本块的入口</li>
+<li>PC相关的指令的传输目的地只能在运行时确定，所以AFLIoT只认为它的下一个地址是其他基本块的入口点</li>
+</ul>
+</li>
+<li>Instructions Wrapping: 封装指令防止影响原目标程序的指令偏移</li>
+<li>Dependencies Appending: 追加用于初始化、用于记录分支信息、用于网络和输入重定向的函数、库以及其他依赖项</li>
+</ul>
+</li>
+<li>详细流程: 二进制插桩的详细流程如下：将基本块中跳转指令（instr<del>branch</del>）的下一条指令修改为存根块（stub<del>instr</del>），存根块中记录了分支信息，它引导程序跳转到用于进行覆盖率信息收集的基本块（blocktracing），之后再经过封装指令块（blockwrapped_instr）返回原始程序的控制流中，所谓的封装块是指封装了边界指令（分支指令、分支指令之后的指令的目的地址以及函数的入口）的基本块。blocktracing和blockwrapped_instr存储在.pcode和.pdata中，这两个节追加在待测试ELF文件节头部表的之后。通过这种方式避免影待测程序的控制流。</li>
+<li>指令封装的实现细节:<br><img src="/images/afliot_03.png" alt="FIG3"><br>注: typeir: PC irrelevant instruction<br>  typernp: PC read-only instruction without push operation<br>  typerp: PC read-only instruction with push operation<br>  typew: PC write instruction<br>  pivot: 非边界指令</li>
+</ul>
+<h4 id="4-3-Fuzzing-Phase"><a href="#4-3-Fuzzing-Phase" class="headerlink" title="4.3 Fuzzing Phase"></a>4.3 Fuzzing Phase</h4><ul>
+<li>非守护程序的输入通过标准输入提供</li>
+<li>守护程序的输入则通过重定向提供到预定义的端口，对于守护进程的详细处理如下：<br><img src="/images/afliot_04.png" alt="FIG4"></li>
+</ul>
+<h4 id="4-4-Toolchains"><a href="#4-4-Toolchains" class="headerlink" title="4.4 Toolchains"></a>4.4 Toolchains</h4><ul>
+<li>使用Ida Pro的FlowChart函数识别目标程序的函数和基本块信息</li>
+<li>使用Capstone反汇编每一个基本块的入口指令</li>
+<li>使用Keystone将补丁信息添加到待分析的二进制程序中</li>
+</ul>
+<h2 id="5-Evaluation"><a href="#5-Evaluation" class="headerlink" title="5. Evaluation"></a>5. Evaluation</h2><h4 id="5-1-Instrumentation-validation"><a href="#5-1-Instrumentation-validation" class="headerlink" title="5.1 Instrumentation validation"></a>5.1 Instrumentation validation</h4><p>由AFLIoT记录的控制流信息更完整<br><img src="/images/afliot_05.png" alt="FIG5"></p>
+<h4 id="5-2-Fuzzing-on-real-world-IoT-devices"><a href="#5-2-Fuzzing-on-real-world-IoT-devices" class="headerlink" title="5.2 Fuzzing on real-world IoT devices"></a>5.2 Fuzzing on real-world IoT devices</h4><p><img src="/images/afliot_06.png" alt="FIG6"></p>
+<h2 id="6-Conclusion-or-Limitations"><a href="#6-Conclusion-or-Limitations" class="headerlink" title="6. Conclusion or Limitations"></a>6. Conclusion or Limitations</h2><ul>
+<li>Variant Fuzzing Efficiency on IoT devices</li>
+<li>Lack of Strategy Improvement in Fuzzing Phase</li>
+<li>Incompleteness for Static Binary Instrumentation</li>
+<li>Memory Limitation for On-Device Address Sanitizer</li>
+</ul>
+<h2 id="7-Related-Work"><a href="#7-Related-Work" class="headerlink" title="7. Related Work"></a>7. Related Work</h2><h4 id="7-1-Improvement-on-AFL"><a href="#7-1-Improvement-on-AFL" class="headerlink" title="7.1 Improvement on AFL"></a>7.1 Improvement on AFL</h4><table>
+<thead>
+<tr>
+<th align="center">方法或工具或研究人员</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">AFLFast</td>
+<td align="center">它使用了马尔可夫链识别低频路径，并集中探索该部分路径</td>
+</tr>
+<tr>
+<td align="center">AFLGo</td>
+<td align="center">使用模拟退火算法将能量分配给目标分支，完成导向模糊测试</td>
+</tr>
+<tr>
+<td align="center">Hawkeye</td>
+<td align="center">基于静态分析和路径分析提升导向型模糊测试的性能</td>
+</tr>
+<tr>
+<td align="center">VUzzer</td>
+<td align="center">使用控制流图筛选输入</td>
+</tr>
+<tr>
+<td align="center">FairFuzz</td>
+<td align="center">指导种子变异生成用于高效探索低频路径的种子（之前的方法虽然能识别低频路径但是生成的种子依然很少能命中分支）</td>
+</tr>
+</tbody></table>
+<h4 id="7-2-Firmware-analysis"><a href="#7-2-Firmware-analysis" class="headerlink" title="7.2 Firmware analysis"></a>7.2 Firmware analysis</h4><table>
+<thead>
+<tr>
+<th align="center">方法或工具或研究人员</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Avatar</td>
+<td align="center">使用硬件在环仿真完成固件分析</td>
+</tr>
+<tr>
+<td align="center">IoTFuzzer</td>
+<td align="center">借助移动端辅助完成对基于Linux的嵌入式固件的黑盒模糊测试</td>
+</tr>
+<tr>
+<td align="center">Firm-AFL</td>
+<td align="center">提出将应用级仿真和系统级仿真相结合，提升嵌入式固件模糊测的效率</td>
+</tr>
+<tr>
+<td align="center">Pretender</td>
+<td align="center">使用机器学习方法完成对外设及其交互的建模</td>
+</tr>
+<tr>
+<td align="center">PeriScope</td>
+<td align="center">一种基于Linux内核的探测和模糊测试框架，用于分析设备和驱动程序之间的交互。它使用MMIO和DMA机制来监视设备驱动程序和相应硬件设备之间的流量</td>
+</tr>
+<tr>
+<td align="center">RetroWrite</td>
+<td align="center">利用静态工具来模糊分析COTS二进制文件。使用符号化来解决x86_64二进制文件的插装问题</td>
+</tr>
+<tr>
+<td align="center">ZAFL</td>
+<td align="center">它利用二进制重写提升使用编译器级插装的模糊器的能力</td>
+</tr>
+</tbody></table>
+<h2 id="8-Comments"><a href="#8-Comments" class="headerlink" title="8. Comments"></a>8. Comments</h2><p>本文设计的AFLIoT，使用无偏移的二进制插装技术重写固件二进制，完成对基于Linux的物联网二进制程序设备的模糊测试。</p>
+<p>注：解读如有错误或不当之处，麻烦在评论区批评指正。</p>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/"> MainPage</a></li><li class="nav_item"><a class="nav-page" href="/#Publications"> Publications</a></li><li class="nav_item"><a class="nav-page" href="/"> About</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2020 - 2023 by Chunlin</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/js/main.js"></script></body></html>
