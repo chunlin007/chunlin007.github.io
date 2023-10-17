@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>chunlin007</title><meta name="author" content="Chunlin"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/">chunlin007</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/"> MainPage</a></li><li class="menus_item"><a class="site-page" href="/#Publications"> Publications</a></li><li class="menus_item"><a class="site-page" href="/"> About</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>Chunlin</h3><p class="author-bio">Do your best.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-facebook-square" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-stack-overflow" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weibo" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-rss" aria-hidden="true"></i></a></li></ul><ul class="social-links"><li><a class="e-social-link" href="/" target="_blank"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Google Scholar</span></a></li><li><a class="e-social-link" href="/" target="_blank"><i class="fab fa-orcid" aria-hidden="true"></i><span>ORCID</span></a></li></ul></div></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">GreenHouse_Single-Service Rehosting of Linux-Based Firmware Binaries in User-Space Emulation</h2><article><h2 id="1-Basic-Information"><a href="#1-Basic-Information" class="headerlink" title="1. Basic Information"></a>1. Basic Information</h2><p>Conference: USENIX Security’23<br>Author: Hui Jun Tay, Kyle Zeng, Jayakrishna Menon Vadayath, Arvind S Raj<br>Affiliation: Arizona State University</p>
+<h2 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2. Introduction"></a>2. Introduction</h2><p>本文设计了Greenhouse，它提出用户空间单服务重托管技术用于对嵌入式固件进行仿真和分析。</p>
+<h2 id="3-Problem"><a href="#3-Problem" class="headerlink" title="3. Problem"></a>3. Problem</h2><p>现有技术表明，固件重新托管要求高执行保真度。然而，对于固件的安全分析来说，高执行保真度通常是不必要的，特别是当目标漏洞不需要高保真度时。</p>
+<h2 id="4-Design"><a href="#4-Design" class="headerlink" title="4. Design"></a>4. Design</h2><h4 id="4-1-IoT-Firmware-categorization"><a href="#4-1-IoT-Firmware-categorization" class="headerlink" title="4.1 IoT Firmware categorization"></a>4.1 IoT Firmware categorization</h4><ul>
+<li>Type-I: 运行通用目的操作系统，例如基于Linux的操作系统</li>
+<li>Type-II: 运行专用于特定的嵌入式环境的定制操作系统</li>
+<li>Type-III: “Monolithic Firmware”，运行于特定设备的二进制代码块，使用特定的接口与硬件进行交互</li>
+</ul>
+<h4 id="4-2-Rehosting-Fidelity"><a href="#4-2-Rehosting-Fidelity" class="headerlink" title="4.2 Rehosting Fidelity"></a>4.2 Rehosting Fidelity</h4><p><img src="/images/greenhouse_01.png" alt="FIG1"><br>作者将仿真固件组件的保真度定义为它与真实设备上的相同组件相似的程度。一般来说，组件与原始设备上的对应组件越相似，仿真的保真度就越高。保真度主要主要从以下两个层面进行度量：</p>
+<ul>
+<li>Extraction Fidelity：静态组件(如文件)的保真度称为提取保真度。</li>
+<li>Execution Fidelity：动态组件(如服务的运行时行为)的保真度称为执行保真度。<br><img src="/images/greenhouse_02.png" alt="FIG2"></li>
+</ul>
+<h4 id="4-3-Single-Service-Rehosting"><a href="#4-3-Single-Service-Rehosting" class="headerlink" title="4.3 Single-Service Rehosting"></a>4.3 Single-Service Rehosting</h4><p>单个服务表示映像中自包含的一组进程，这些进程不与主进程不是父进程的任何其他进程通信。Greenhouse使用Qemu的用户模式重托管该类服务减少开销。 Greenhouse主要用于重托管Type-I类的固件。  </p>
+<h4 id="4-4-Greenhouse-Overview"><a href="#4-4-Greenhouse-Overview" class="headerlink" title="4.4 Greenhouse Overview"></a>4.4 Greenhouse Overview</h4><p><img src="/images/greenhouse_03.png" alt="FIG3"></p>
+<ul>
+<li>File System Extraction（Extractor）: 使用binwalk提取，并添加–preserve-symlinks以及-M选项</li>
+<li>Target Emulation（Runner）: 在docker中使用Qemu用户模式运行网络服务，并支持两类tracing模式：<ul>
+<li>partial tracing mode: 收集父进程以及所有子进程的系统调用trace</li>
+<li>full tracing mode: 收集父进程以及所有子进程的系统调用和指令trace、</li>
+</ul>
+</li>
+<li>Fidelity Testing（Checker）: 测试HTTP, UPnP, 或者DNS服务的连接性， 以及它们的响应行为</li>
+<li>Service Fixing（Fixer）: 使用在runner中的生成的tracing和日志判断是否存在潜在的roadblocks（见4.5节），如果存在，Fixer使用相应的措施去绕过roadblocks。当达到指定的仿真度或者迭代指定的轮数时，将使用exporter打包重托管的文件系统。</li>
+</ul>
+<h4 id="4-5-Roadblocks-amp-Interventions"><a href="#4-5-Roadblocks-amp-Interventions" class="headerlink" title="4.5 Roadblocks &amp; Interventions"></a>4.5 Roadblocks &amp; Interventions</h4><table>
+<thead>
+<tr>
+<th align="center">Roadblocks</th>
+<th align="center">Interventions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Missing Paths(R1)</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Runtime Arguments(R2)</td>
+<td align="center">Runtime ArgParser (I5)</td>
+</tr>
+<tr>
+<td align="center">Peripheral Access(R3)</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">NVRAM Configurations(R4)</td>
+<td align="center">Nvram-faker (I4)</td>
+</tr>
+<tr>
+<td align="center">Hard-coded Network Devices(R5)</td>
+<td align="center">Dummy Network Devices(I6)、IPv6 Workaround(I8)</td>
+</tr>
+<tr>
+<td align="center">Multi-Binary Behavior(R6)</td>
+<td align="center">Background Script Plugins(I7)</td>
+</tr>
+<tr>
+<td align="center">Environment Checks(R7)</td>
+<td align="center">Patching sysinfo()(I9)</td>
+</tr>
+<tr>
+<td align="center">Environment Mangling(R8)</td>
+<td align="center">Logging Behavior(I10)</td>
+</tr>
+<tr>
+<td align="center">File Setup(I1) - [R1, R3, R7]</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">File Sanitization(I2) - [R3, R7]</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Boot-up Synchronization(I3) - [R1, R2, R7]</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>对于一些无法直接解决的方案，GreenHouse通过对固件二进制打补丁来实现。主要分为三类：</p>
+<ul>
+<li>Premature Exit Patch：在固件中，如果某些一般情况的检查失败，固件则会则分支到退出函数。为了处理这类情况，GreebHouse使用上下文敏感的控制流图，识别这类函数，然后通过反转分支绕过该类函数。</li>
+<li>Wait Loop Patch：固件长时间等待外部环境输入时，同样使用上下文敏感的控制流图，试图找到不属于原始执行跟踪的分支节点。</li>
+<li>Crashing Instruction Patch：当遇到会立即导致crash的块时，它获取执行跟踪中最后记录的指令的地址，将其映射到固件二进制文件中相应的基本块，并对将要执行的下一条指令进行修补，用nops替换它。</li>
+</ul>
+<h2 id="5-Evaluation"><a href="#5-Evaluation" class="headerlink" title="5. Evaluation"></a>5. Evaluation</h2><h4 id="5-1-Firmware-Rehosting-Results"><a href="#5-1-Firmware-Rehosting-Results" class="headerlink" title="5.1 Firmware Rehosting Results"></a>5.1 Firmware Rehosting Results</h4><p><img src="/images/greenhouse_04.png" alt="FIG4"><br><img src="/images/greenhouse_05.png" alt="FIG5"><br><img src="/images/greenhouse_06.png" alt="FIG6"><br><img src="/images/greenhouse_07.png" alt="FIG7"></p>
+<h4 id="5-2-Vulnerability-Risk-Assessment"><a href="#5-2-Vulnerability-Risk-Assessment" class="headerlink" title="5.2 Vulnerability Risk Assessment"></a>5.2 Vulnerability Risk Assessment</h4><p><img src="/images/greenhouse_08.png" alt="FIG8"></p>
+<h4 id="5-3-Large-Scale-Fuzzing"><a href="#5-3-Large-Scale-Fuzzing" class="headerlink" title="5.3 Large-Scale Fuzzing"></a>5.3 Large-Scale Fuzzing</h4><p><img src="/images/greenhouse_09.png" alt="FIG9"><br><img src="/images/greenhouse_10.png" alt="FIG10"><br><img src="/images/greenhouse_11.png" alt="FIG11"></p>
+<h2 id="6-Conclusion-or-Limitations"><a href="#6-Conclusion-or-Limitations" class="headerlink" title="6. Conclusion or Limitations"></a>6. Conclusion or Limitations</h2><ul>
+<li>Encrypted firmware</li>
+<li>QEMU limitations</li>
+<li>Angr limitations（for CFG）</li>
+<li>Missing library functions</li>
+<li>False positives from patching</li>
+</ul>
+<h2 id="7-Related-Work"><a href="#7-Related-Work" class="headerlink" title="7. Related Work"></a>7. Related Work</h2><table>
+<thead>
+<tr>
+<th align="center">方法或工具或研究人员</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ARI</td>
+<td align="center">它扩展了Firmadyne，并应用干预来处理基于linux的固件上的不同故障情况</td>
+</tr>
+<tr>
+<td align="center">EQUAFL</td>
+<td align="center">将重新托管的固件映像的文件系统状态移植到用户空间，完全在用户空间中模糊化</td>
+</tr>
+</tbody></table>
+<h2 id="9-Comments"><a href="#9-Comments" class="headerlink" title="9. Comments"></a>9. Comments</h2><p>本文设计了Greenhouse，它提出用户空间单服务重托管技术用于对嵌入式固件进行仿真和分析。本文的工作主要集中于基于Linux的人嵌入式的服务进行分析，仿真能力和分析能力得到较大的提升。</p>
+<p>注：解读如有错误或不当之处，麻烦在评论区批评指正。</p>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/"> MainPage</a></li><li class="nav_item"><a class="nav-page" href="/#Publications"> Publications</a></li><li class="nav_item"><a class="nav-page" href="/"> About</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2020 - 2023 by Chunlin</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/js/main.js"></script></body></html>
